@@ -1,0 +1,79 @@
+.calendar-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.calendar-grid {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background-color: #f0f0f0;
+}
+
+.calendar-day {
+    min-height: 120px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.calendar-day:hover {
+    background-color: #f8f9fa;
+}
+
+.calendar-day.today {
+    background-color: #e8f4ff;
+    font-weight: bold;
+}
+
+.event {
+    margin: 2px 0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-meeting {
+    background-color: #cce5ff;
+}
+
+.event-deadline {
+    background-color: #f8d7da;
+}
+
+.event-timeoff {
+    background-color: #d4edda;
+}

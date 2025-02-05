@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Desktop/System-Sheet/js"
+		},
+		{
+			"path": "../Desktop/System-Sheet/css"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "timesheet-system",
+		"liveServer.settings.port": 5501
+	}
+}

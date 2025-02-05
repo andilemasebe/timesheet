@@ -1,0 +1,918 @@
+Andile Masebe
+
+admin-dashboard.html
+ 
+admin-dashboard.html
+departments.html
+ 
+company-profile.html
+teams.html
+ 
+employee-management.html
+ 
+project-management.html
+ 
+timesheet.html
+ 
+training.html
+ 
+timesheet
+ write feature document,
+
+write user stories, user journey, user acceptance for timesheet system
+
+
+
+Context
+— 23 items
+Claude 3.5 Sonnet (New)
+I'll help create a comprehensive feature document for the timesheet system based on the codebase context.
+
+Feature Document: Timesheet Management System
+
+Core Features
+User Authentication & Role Management
+
+Admin/Manager/Employee login
+Role-based access control
+Profile management
+Dashboard
+
+KPI metrics visualization
+Employee distribution charts
+Project status tracking
+Recent activities feed
+Company Management
+
+Company profile configuration
+Department management
+Team organization
+Employee directory
+Project & Task Tracking
+
+Project creation and assignment
+Task management
+Progress monitoring
+Deadline tracking
+User Stories
+
+As an employee:
+I want to log my daily work hours
+I want to view my timesheet history
+I want to submit timesheets for approval
+I want to track my project assignments
+As a manager:
+I want to approve/reject timesheet submissions
+I want to view team members' time allocation
+I want to generate team performance reports
+I want to manage project assignments
+As an admin:
+I want to manage all company departments
+I want to configure system settings
+I want to generate company-wide reports
+I want to manage user access rights
+User Journey
+
+Employee Journey:
+Login → View Dashboard → Select Project → Log Hours → Submit Timesheet → Receive Approval/Rejection → View History
+
+Copy
+
+Apply
+
+Manager Journey:
+Login → Review Pending Timesheets → Manage Team Projects → Generate Reports → Monitor Team Performance
+
+Copy
+
+Apply
+
+Admin Journey:
+Login → Configure Company Settings → Manage Departments/Teams → Monitor System Usage → Generate Analytics
+
+Copy
+
+Apply
+
+User Acceptance Criteria
+
+Timesheet Entry
+Users can log hours for multiple projects
+System validates total daily hours
+Automatic date and time tracking
+Save draft functionality
+Approval Process
+Managers receive notification for pending approvals
+Ability to add comments on rejection
+Email notifications for status changes
+Bulk approval option for multiple entries
+Reporting
+Export reports in multiple formats
+Filter by date range, department, project
+Visual analytics and charts
+Custom report templates
+System Administration
+User role modification
+Department/team structure management
+System backup and restore
+Audit trail logging
+This feature document aligns with the existing codebase structure and provides a clear roadmap for implementation and testing.
+
+Try again with different context
+Public knowledge only
+Current file only
+Add context...
+Avatar for andilemasebe-bjgxh
+Andile Masebe
+courses.html
+ 
+certificates.html
+ 
+reports.html
+ 
+index.html
+ 
+register.html
+ 
+reset-password.html
+ 
+settings.html
+ 
+profile.html
+calendar.html
+ write feature document,
+
+write user stories, user journey, user acceptance for timesheet system
+
+
+
+Context
+— 9 new items
+Claude 3.5 Sonnet (New)
+Feature Document: Training & Certification Management
+
+Core Features
+Course Management
+
+Course creation and scheduling
+Enrollment tracking
+Progress monitoring
+Completion certificates
+Certification Programs
+
+Certificate validation
+Expiry tracking
+Renewal notifications
+Professional development paths
+Calendar Integration
+
+Training schedules
+Course deadlines
+Certification renewal dates
+Team availability
+User Stories
+
+As an employee:
+I want to browse available training courses
+I want to track my certification status
+I want to download my certificates
+I want to see upcoming training sessions
+As a trainer:
+I want to create new courses
+I want to manage course materials
+I want to track student progress
+I want to issue certificates
+As an admin:
+I want to manage certification programs
+I want to track company-wide training metrics
+I want to generate training reports
+I want to set up automated notifications
+User Journey
+
+Training Journey:
+Browse Courses → Enroll → Complete Modules → Take Assessment → Receive Certificate
+
+Copy
+
+Apply
+
+Certification Journey:
+View Requirements → Complete Training → Submit Documentation → Receive Certificate → Track Renewal
+
+Copy
+
+Apply
+
+Admin Journey:
+Create Course → Assign Trainers → Monitor Progress → Generate Reports → Update Programs
+
+Copy
+
+Apply
+
+User Acceptance Criteria
+
+Course Management
+Create detailed course descriptions
+Set prerequisites and capacity limits
+Track completion rates
+Generate progress reports
+Certification Process
+Digital certificate generation
+Automated expiry notifications
+Renewal tracking system
+Verification portal
+Calendar Features
+Event scheduling
+Reminder system
+Resource allocation
+Conflict detection
+Reporting System
+Training effectiveness metrics
+Certification status reports
+Compliance tracking
+Cost analysis
+User Settings
+Notification preferences
+Profile customization
+Document storage
+Progress tracking
+The implementation aligns with the existing HTML structure and provides a comprehensive system for managing professional development within the organization.
+
+
+
+Try again with different context
+Add context...
+Avatar for andilemasebe-bjgxh
+Andile Masebe
+
+
+
+
+
+
+Create a timesheet system with those features : login page, registration page, reset/forgot password page, dashboard page, employee-management page, project-management page, timesheet-management page, departments page, company-profile page, teams page, training page  using ASP.NET Web Application (.NET Framework) for frontend and C# for the backend, and SQL for the Database. structure solution
+
+
+
+
+
+CREATE DATABASE TimesheetDB;
+GO
+
+USE TimesheetDB;
+GO
+
+-- Users table
+CREATE TABLE Users (
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Role VARCHAR(20),
+    DepartmentId INT,
+    TeamId INT,
+    ResetPasswordToken VARCHAR(255),
+    ResetPasswordExpiry DATETIME,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- Departments table
+CREATE TABLE Departments (
+    DepartmentId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255)
+);
+
+-- Teams table
+CREATE TABLE Teams (
+    TeamId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    DepartmentId INT,
+    LeaderId INT
+);
+
+-- Projects table
+CREATE TABLE Projects (
+    ProjectId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255),
+    StartDate DATETIME,
+    EndDate DATETIME,
+    Status VARCHAR(20)
+);
+
+-- Timesheets table
+CREATE TABLE Timesheets (
+    TimesheetId INT IDENTITY(1,1) PRIMARY KEY,
+    UserId INT,
+    ProjectId INT,
+    Date DATE,
+    Hours DECIMAL(4,2),
+    Description VARCHAR(255),
+    Status VARCHAR(20),
+    SubmittedAt DATETIME,
+    ApprovedBy INT
+);
+
+-- Training table
+CREATE TABLE Training (
+    TrainingId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100),
+    Description VARCHAR(255),
+    StartDate DATETIME,
+    EndDate DATETIME,
+    Status VARCHAR(20)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+Andile Masebe
+create timesheet system that have the following features: login
+
+register
+
+reset/forgot password
+
+dashboard
+
+employee-management
+
+project-management
+
+timesheet
+
+departments
+
+company-profile
+
+teams
+
+training 
+
+
+Context
+— none fetched
+Claude 3.5 Sonnet (New)
+I'll help you create a timesheet system with those features using Node.js, Express, and MongoDB for the backend, and React for the frontend. Here's the structured solution:
+
+First, let's set up the project structure:
+
+mkdir timesheet-system
+
+cd timesheet-system
+
+npm init -y
+
+Here's the project structure we'll create:
+
+mkdir -p backend/src/{controllers,models,routes,middleware,config} frontend/src/{components,pages,services,utils}
+
+Let's start with the backend setup. First, create the package.json dependencies:
+
+{
+  "name": "timesheet-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.6.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0"
+  }
+}
+
+package.json
+Create the main server file:
+
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/employees', require('./routes/employees'));
+app.use('/api/projects', require('./routes/projects'));
+app.use('/api/timesheets', require('./routes/timesheets'));
+app.use('/api/departments', require('./routes/departments'));
+app.use('/api/teams', require('./routes/teams'));
+app.use('/api/training', require('./routes/training'));
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+index.js
+Create the User model:
+
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  firstName: String,
+  lastName: String,
+  role: {
+    type: String,
+    enum: ['admin', 'employee', 'manager'],
+    default: 'employee'
+  },
+  department: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Department'
+  },
+  team: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team'
+  },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('User', userSchema);
+
+User.js
+Create the auth controller:
+
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+
+exports.register = async (req, res) => {
+  try {
+    const { email, password, firstName, lastName } = req.body;
+    
+    const hashedPassword = await bcrypt.hash(password, 12);
+    
+    const user = await User.create({
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName
+    });
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1d'
+    });
+
+    res.status(201).json({ token });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1d'
+    });
+
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1h'
+    });
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpire = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    // Send email with reset link
+    // Implementation depends on your email service provider
+
+    res.json({ message: 'Password reset email sent' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+authController.js
+For the frontend, create the main App component:
+
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import EmployeeManagement from './pages/EmployeeManagement';
+import ProjectManagement from './pages/ProjectManagement';
+import Timesheet from './pages/Timesheet';
+import Departments from './pages/Departments';
+import Teams from './pages/Teams';
+import Training from './pages/Training';
+import CompanyProfile from './pages/CompanyProfile';
+import PrivateRoute from './components/PrivateRoute';
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/forgot-password" component={ForgotPassword} />
+        <PrivateRoute exact path="/" component={Dashboard} />
+        <PrivateRoute exact path="/employees" component={EmployeeManagement} />
+        <PrivateRoute exact path="/projects" component={ProjectManagement} />
+        <PrivateRoute exact path="/timesheet" component={Timesheet} />
+        <PrivateRoute exact path="/departments" component={Departments} />
+        <PrivateRoute exact path="/teams" component={Teams} />
+        <PrivateRoute exact path="/training" component={Training} />
+        <PrivateRoute exact path="/company" component={CompanyProfile} />
+      </Switch>
+    </Router>
+  );
+}
+
+export default App;
+
+App.js
+This is a basic structure to get you started. Each feature (employees, projects, timesheets, etc.) will need its own:
+
+Model definition
+Controller logic
+API routes
+Frontend components and pages
+State management (Redux/Context)
+To run the project:
+
+cd backend && npm install
+
+cd frontend && npm install
+
+Create a .env file for environment variables:
+
+MONGODB_URI=mongodb://localhost:27017/timesheet
+JWT_SECRET=your_jwt_secret
+PORT=5000
+
+.env
+This provides a foundation for the timesheet system. Each feature can be expanded with additional functionality as needed. Would you like me to detail any specific feature implementation?
+
+Try again with different context
+Add context...
+Avatar for andilemasebe-bjgxh
+Andile Masebe
+Create a timesheet system with those features : login page, registration page, reset/forgot password page, dashboard page, employee-management page, project-management page, timesheet-management page, departments page, company-profile page, teams page, training page  using ASP.NET(aspx) for frontend and C# for the backend, and SQL for the Database. structure solution
+
+
+Context
+— none fetched
+Claude 3.5 Sonnet (New)
+I'll help you create a robust timesheet system using ASP.NET WebForms, C#, and SQL Server. Here's the structured solution:
+
+First, let's create the project structure:
+
+dotnet new webforms -n TimesheetSystem
+
+cd TimesheetSystem
+
+Here's the solution structure:
+
+├── App_Code/
+│   ├── Models/
+│   ├── Services/
+│   └── Utils/
+├── Pages/
+│   ├── Auth/
+│   ├── Admin/
+│   └── Employee/
+├── Scripts/
+├── Styles/
+├── Web.config
+└── Global.asax
+
+/TimesheetSystem/
+Let's create the database schema:
+
+CREATE DATABASE TimesheetDB;
+GO
+
+USE TimesheetDB;
+GO
+
+-- Users table
+CREATE TABLE Users (
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Role VARCHAR(20),
+    DepartmentId INT,
+    TeamId INT,
+    ResetPasswordToken VARCHAR(255),
+    ResetPasswordExpiry DATETIME,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- Departments table
+CREATE TABLE Departments (
+    DepartmentId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255)
+);
+
+-- Teams table
+CREATE TABLE Teams (
+    TeamId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    DepartmentId INT,
+    LeaderId INT
+);
+
+-- Projects table
+CREATE TABLE Projects (
+    ProjectId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255),
+    StartDate DATETIME,
+    EndDate DATETIME,
+    Status VARCHAR(20)
+);
+
+-- Timesheets table
+CREATE TABLE Timesheets (
+    TimesheetId INT IDENTITY(1,1) PRIMARY KEY,
+    UserId INT,
+    ProjectId INT,
+    Date DATE,
+    Hours DECIMAL(4,2),
+    Description VARCHAR(255),
+    Status VARCHAR(20),
+    SubmittedAt DATETIME,
+    ApprovedBy INT
+);
+
+-- Training table
+CREATE TABLE Training (
+    TrainingId INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100),
+    Description VARCHAR(255),
+    StartDate DATETIME,
+    EndDate DATETIME,
+    Status VARCHAR(20)
+);
+
+TimesheetDB.sql
+Create the base master page:
+
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TimesheetSystem.SiteMaster" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Timesheet System</title>
+    <link href="~/Styles/main.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+        <div class="navbar">
+            <asp:Menu ID="NavigationMenu" runat="server" CssClass="nav-menu">
+                <Items>
+                    <asp:MenuItem Text="Dashboard" NavigateUrl="~/Pages/Dashboard.aspx" />
+                    <asp:MenuItem Text="Employees" NavigateUrl="~/Pages/Admin/EmployeeManagement.aspx" />
+                    <asp:MenuItem Text="Projects" NavigateUrl="~/Pages/Admin/ProjectManagement.aspx" />
+                    <asp:MenuItem Text="Timesheets" NavigateUrl="~/Pages/Employee/Timesheet.aspx" />
+                    <asp:MenuItem Text="Departments" NavigateUrl="~/Pages/Admin/Departments.aspx" />
+                    <asp:MenuItem Text="Teams" NavigateUrl="~/Pages/Admin/Teams.aspx" />
+                    <asp:MenuItem Text="Training" NavigateUrl="~/Pages/Training.aspx" />
+                </Items>
+            </asp:Menu>
+        </div>
+        <div class="container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
+
+Site.Master
+Create the login page:
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="TimesheetSystem.Pages.Auth.Login" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Login - Timesheet System</title>
+    <link href="~/Styles/auth.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="loginForm" runat="server">
+        <div class="login-container">
+            <h2>Login</h2>
+            <div class="form-group">
+                <asp:Label runat="server" AssociatedControlID="txtEmail">Email:</asp:Label>
+                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEmail" 
+                    ErrorMessage="Email is required" CssClass="validation-error" />
+            </div>
+            <div class="form-group">
+                <asp:Label runat="server" AssociatedControlID="txtPassword">Password:</asp:Label>
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtPassword" 
+                    ErrorMessage="Password is required" CssClass="validation-error" />
+            </div>
+            <div class="form-group">
+                <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" CssClass="btn btn-primary" />
+            </div>
+            <div class="links">
+                <asp:HyperLink runat="server" NavigateUrl="~/Pages/Auth/ForgotPassword.aspx">Forgot Password?</asp:HyperLink>
+                <asp:HyperLink runat="server" NavigateUrl="~/Pages/Auth/Register.aspx">Register</asp:HyperLink>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+
+Login.aspx
+Create the login code-behind:
+
+using System;
+using System.Data.SqlClient;
+using System.Web.Security;
+
+namespace TimesheetSystem.Pages.Auth
+{
+    public partial class Login : System.Web.UI.Page
+    {
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            string email = txtEmail.Text;
+            string password = txtPassword.Text;
+
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDB"].ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT UserId, Password, Role FROM Users WHERE Email = @Email", conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string hashedPassword = reader["Password"].ToString();
+                            if (VerifyPassword(password, hashedPassword))
+                            {
+                                FormsAuthentication.SetAuthCookie(email, false);
+                                Response.Redirect("~/Pages/Dashboard.aspx");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool VerifyPassword(string password, string hashedPassword)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+        }
+    }
+}
+
+Login.aspx.cs
+Create a User model:
+
+namespace TimesheetSystem.Models
+{
+    public class User
+    {
+        public int UserId { get; set; }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Role { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? TeamId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+    }
+}
+
+User.cs
+Create a database connection helper:
+
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace TimesheetSystem.Utils
+{
+    public static class DatabaseHelper
+    {
+        public static SqlConnection GetConnection()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["TimesheetDB"].ConnectionString;
+            return new SqlConnection(connectionString);
+        }
+    }
+}
+
+DatabaseHelper.cs
+Update the Web.config with connection string:
+
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <connectionStrings>
+    <add name="TimesheetDB" 
+         connectionString="Server=localhost;Database=TimesheetDB;Trusted_Connection=True;"
+         providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  
+  <system.web>
+    <authentication mode="Forms">
+      <forms loginUrl="~/Pages/Auth/Login.aspx" timeout="2880" />
+    </authentication>
+    <authorization>
+      <deny users="?" />
+    </authorization>
+  </system.web>
+</configuration>
+
+Web.config
+This provides a solid foundation for the timesheet system. Each feature (dashboard, employee management, etc.) will need its own:
+
+ASPX page
+Code-behind file
+Business logic layer
+Data access layer
+Associated database procedures
+Would you like me to detail any specific feature implementation?
+
+
+
+Try again with different context
+Add context...
+Avatar for andilemasebe-bjgxh
+Andile Masebe
+
+Create a timesheet system with those features : login page, registration page, reset/forgot password page, dashboard page, employee-management page, project-management page, timesheet-management page, departments page, company-profile page, teams page, training page  using ASP.NET Web Application (.NET Framework) for frontend and C# for the backend, and SQL for the Database. structure solution
+
+Create a timesheet system with those features: Login, Registration, and Reset password pages
+Dashboard, Company as collapse(Profile, Departments, Teams) pages, Employees, Projects, Timesheets, Training as collapse(Courses, Certificates) pages, Reports, using ASP.NET Web Application (.NET Framework) for frontend and Javascript for interaction and C# for the backend, and SQL for the Database. structure solution
+
+
+

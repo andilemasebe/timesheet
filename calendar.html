@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar | Timesheet System</title>
+    <!-- <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/calendar.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/calendar.css">
+</head>
+<body>
+    <!-- <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Calendar Dashboard</h1>
+        <button onclick="location.href='index.html'" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="hamburger-menu" id="menuToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div> -->
+    
+    <!-- sidenav -->
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="overflow-auto">
+        <div class="sidebar-header">
+            <img src="images/am.png" alt="Logo" class="logo img-fluid">
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="admin-dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="#companySubmenu" data-bs-toggle="collapse" data-bs-parent="#sidebar" class="nav-link d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-building me-2"></i> Company
+                    </div>
+                    <i class="fas fa-chevron-right submenu-arrow"></i>
+                </a>
+                <ul class="collapse list-unstyled ps-3" id="companySubmenu">
+                    <li><a href="#" class="nav-link">Profile</a></li>
+                    <li><a href="#" class="nav-link">Departments</a></li>
+                    <li><a href="#" class="nav-link">Teams</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="employee-management.html" class="nav-link"><i class="fas fa-users-cog me-2"></i> Employees</a>
+            </li>
+            <li>
+                <a href="project-management.html" class="nav-link"><i class="fas fa-tasks me-2"></i> Projects</a>
+            </li>
+            <!-- <li>
+                <a href="task-management.html" class="nav-link"><i class="fas fa-tasks me-2"></i> Tasks</a>
+            </li> -->
+            <li>
+                <a href="timesheet.html" class="nav-link"><i class="fas fa-clock me-2"></i> Timesheets</a>
+            </li>
+            <li>
+                <a href="#trainingSubmenu" data-bs-toggle="collapse" data-bs-parent="#sidebar" class="nav-link d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-graduation-cap me-2"></i> Training
+                    </div>
+                    <i class="fas fa-chevron-right submenu-arrow"></i>
+                </a>
+                <ul class="collapse list-unstyled ps-3" id="trainingSubmenu">
+                    <li><a href="courses.html" class="nav-link">Courses</a></li>
+                    <li><a href="certificates.html" class="nav-link">Certifications</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="reports.html" class="nav-link"><i class="fas fa-chart-line me-2"></i> Reports</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div id="content">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <!-- <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i>
+                </button> -->
+                <div class="ms-auto d-flex align-items-center">
+                    <div class="dropdown me-3">
+                        <button class="btn btn-light position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                3
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                            <li><a class="dropdown-item" href="#">New task assigned</a></li>
+                            <li><a class="dropdown-item" href="#">Project deadline updated</a></li>
+                            <li><a class="dropdown-item" href="#">Team meeting reminder</a></li>
+                        </ul>
+                    </div>
+                    <div class="ms-auto">
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                                <img src="images/OIP.jpg" class="rounded-circle me-2" width="32" height="32" alt="Avatar">
+                                <!--<i class="fas fa-user me-2"></i> Buhle Jiba -->
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user-circle me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="calendar.html"><i class="fas fa-cog me-2"></i> Calender</a></li>
+                                <li><a class="dropdown-item" href="settings.html"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="logout.html"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+          <!-- Page Content -->
+          <div class="dashboard">
+              <div class="calendar-container">
+                  <div class="calendar-header">
+                      <div class="calendar-navigation">
+                          <button class="btn btn-light" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                          <h2 id="currentMonth" class="mb-0">May 2024</h2>
+                          <button class="btn btn-light" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                      </div>
+                      <div class="calendar-views">
+                          <div class="btn-group" role="group">
+                              <button class="btn btn-light active" data-view="month">Month</button>
+                              <button class="btn btn-light" data-view="week">Week</button>
+                              <button class="btn btn-light" data-view="day">Day</button>
+                          </div>
+                      </div>
+                      <button id="addEventBtn" class="btn btn-danger">
+                          <i class="fas fa-plus"></i> Add Event
+                      </button>
+                  </div>
+
+                  <div class="calendar-toolbar bg-light p-3 rounded mb-3">
+                      <div class="calendar-filters">
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" checked data-filter="meetings" id="meetingsCheck">
+                              <label class="form-check-label" for="meetingsCheck">Meetings</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" checked data-filter="deadlines" id="deadlinesCheck">
+                              <label class="form-check-label" for="deadlinesCheck">Deadlines</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" checked data-filter="timeoff" id="timeoffCheck">
+                              <label class="form-check-label" for="timeoffCheck">Time Off</label>
+                          </div>
+                      </div>
+                      <div class="calendar-search">
+                          <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Search events...">
+                              <span class="input-group-text"><i class="fas fa-search"></i></span>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="calendar-grid shadow-sm bg-white rounded">
+                      <div class="calendar-weekdays">
+                          <div class="fw-bold">Sun</div>
+                          <div class="fw-bold">Mon</div>
+                          <div class="fw-bold">Tue</div>
+                          <div class="fw-bold">Wed</div>
+                          <div class="fw-bold">Thu</div>
+                          <div class="fw-bold">Fri</div>
+                          <div class="fw-bold">Sat</div>
+                      </div>
+                      <div id="calendarDays" class="calendar-days">
+                          <!-- Days will be dynamically populated -->
+                      </div>
+                  </div>
+
+                  <div class="upcoming-events mt-4">
+                      <h3 class="mb-3">Upcoming Events</h3>
+                      <div id="eventsList" class="list-group">
+                          <!-- Events will be dynamically populated -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Add Event Modal -->
+      <div id="eventModal" class="modal fade" tabindex="-1">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title"><i class="fas fa-calendar-plus"></i> Add Event</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="eventForm">
+                          <div class="mb-3">
+                              <label class="form-label">Event Title</label>
+                              <input type="text" class="form-control" id="eventTitle" required>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6 mb-3">
+                                  <label class="form-label">Start Date</label>
+                                  <input type="datetime-local" class="form-control" id="eventStart" required>
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                  <label class="form-label">End Date</label>
+                                  <input type="datetime-local" class="form-control" id="eventEnd" required>
+                              </div>
+                          </div>
+                          <div class="mb-3">
+                              <label class="form-label">Event Type</label>
+                              <select class="form-select" id="eventType" required>
+                                  <option value="meeting">Meeting</option>
+                                  <option value="deadline">Deadline</option>
+                                  <option value="timeoff">Time Off</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                              <label class="form-label">Description</label>
+                              <textarea class="form-control" id="eventDescription" rows="3"></textarea>
+                          </div>
+                          <div class="mb-3">
+                              <label class="form-label">Attendees</label>
+                              <input type="text" class="form-control" id="eventAttendees" placeholder="Enter email addresses">
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-primary">Create Event</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/calendar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Initialize FullCalendar
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: false,
+        events: loadEvents,
+        editable: true,
+        selectable: true,
+        selectMirror: true,
+        dayMaxEvents: true,
+        select: handleDateSelect,
+        eventClick: handleEventClick,
+        eventDrop: handleEventDrop,
+        eventResize: handleEventResize
+    });
+
+    calendar.render();
+
+    // Initialize Mini Calendar
+    const miniCalendar = new FullCalendar.Calendar(document.getElementById('miniCalendar'), {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next',
+            center: 'title',
+            right: ''
+        },
+        dateClick: function(info) {
+            calendar.gotoDate(info.date);
+        }
+    });
+
+    miniCalendar.render();
+
+    // View Options
+    document.querySelectorAll('.btn-view').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.btn-view').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            calendar.changeView(button.dataset.view);
+        });
+    });
+
+    // New Event Button
+    document.getElementById('newEvent').addEventListener('click', () => {
+        document.getElementById('eventModal').style.display = 'block';
+    });
+
+    // Close Modal
+    document.querySelector('.close').addEventListener('click', () => {
+        document.getElementById('eventModal').style.display = 'none';
+    });
+
+    // Event Form Submission
+    document.getElementById('eventForm').addEventListener('submit', handleEventSubmit);
+
+    // Filter Changes
+    document.querySelectorAll('.calendar-filters input').forEach(filter => {
+        filter.addEventListener('change', () => {
+            calendar.refetchEvents();
+        });
+    });
+
+    // Load and display upcoming events
+    loadUpcomingEvents();
+});
+
+function loadEvents(fetchInfo, successCallback, failureCallback) {
+    // Mock events - replace with API call
+    const events = [
+        {
+            id: '1',
+            title: 'Team Meeting',
+            start: '2024-01-10T10:00:00',
+            end: '2024-01-10T11:00:00',
+            type: 'meeting'
+        },
+        {
+            id: '2',
+            title: 'Project Deadline',
+            start: '2024-01-15',
+            type: 'deadline'
+        },
+        {
+            id: '3',
+            title: 'Vacation',
+            start: '2024-01-20',
+            end: '2024-01-25',
+            type: 'timeoff'
+        }
+    ];
+
+    // Filter events based on selected filters
+    const activeFilters = Array.from(document.querySelectorAll('.calendar-filters input:checked'))
+        .map(input => input.dataset.filter);
+
+    const filteredEvents = events.filter(event => activeFilters.includes(event.type));
+    successCallback(filteredEvents);
+}
+
+function handleDateSelect(selectInfo) {
+    document.getElementById('eventModal').style.display = 'block';
+    document.getElementById('eventStart').value = selectInfo.startStr;
+    document.getElementById('eventEnd').value = selectInfo.endStr;
+}
+
+function handleEventClick(clickInfo) {
+    // Show event details or edit modal
+    if (confirm(`Do you want to delete '${clickInfo.event.title}'?`)) {
+        clickInfo.event.remove();
+    }
+}
+
+function handleEventDrop(dropInfo) {
+    // Handle event drag and drop
+    console.log('Event dropped:', dropInfo.event.title);
+}
+
+function handleEventResize(resizeInfo) {
+    // Handle event resize
+    console.log('Event resized:', resizeInfo.event.title);
+}
+
+function handleEventSubmit(e) {
+    e.preventDefault();
+    
+    const newEvent = {
+        title: document.getElementById('eventTitle').value,
+        start: document.getElementById('eventStart').value,
+        end: document.getElementById('eventEnd').value,
+        type: document.getElementById('eventType').value,
+        description: document.getElementById('eventDescription').value
+    };
+
+    // Add event to calendar
+    calendar.addEvent(newEvent);
+    
+    // Close modal and reset form
+    document.getElementById('eventModal').style.display = 'none';
+    e.target.reset();
+}
+
+function loadUpcomingEvents() {
+    const upcomingList = document.getElementById('upcomingEventsList');
+    const events = calendar.getEvents();
+    
+    const upcomingEvents = events
+        .filter(event => event.start >= new Date())
+        .sort((a, b)
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userRole = localStorage.getItem('userRole');
+            updateSidebarByRole(userRole);
+        });
+    </script>
+</body>
+</html>
+

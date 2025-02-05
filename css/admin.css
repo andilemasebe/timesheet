@@ -1,0 +1,274 @@
+/* Main Layout */
+:root {
+    --primary-color: #4e73df;
+    --pro-color: #093f5e;
+    --secondary-color: #858796;
+    --success-color: #1cc88a;
+    --info-color: #36b9cc;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --light-color: #f8f9fc;
+    --dark-color: #5a5c69;
+    --border-color: #e3e6f0;
+    -–main-white: #f0f0f0;
+    -–main-red: #be3144;
+    -–main-blue: #45567d;
+    –-main-gray: #303841;
+
+    /* Primary colors */
+    --primary-color: #3498db; /* Blue */
+    --tertiary-color: #f1c40f; /* Yellow */
+
+    /* Neutral colors */
+    --white: #ffffff;
+    --black: #000000;
+    --gray-light: #bdc3c7;
+    --gray-dark: #2c3e50;
+
+    /* Accent colors */
+    --accent-red: #e74c3c;
+    --accent-orange: #e67e22;
+    --accent-purple: #9b59b6;
+
+    /* Background colors */
+    --background-light: #ecf0f1;
+    --background-dark: #34495e;
+
+    /* Text colors */
+    --text-primary: #333333;
+    --text-secondary: #555555;
+    --text-muted: #999999;
+
+    --font-family: 'Nunito', sans-serif;
+    --font-size: 1rem;
+    --font-weight: 400;
+    --line-height: 1.5;
+    --border-radius: 0.35rem;
+    --box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --transition: all 0.3s ease;
+    --transition-hover: all 0.3s ease;
+    --transition-collapse: height 0.3s ease;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--light-color);
+}
+
+/* Wrapper */
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 280px;
+    background: linear-gradient(180deg, var(--dark-color) 0%, #5a5c69 100%);
+    color: #fff;
+    transition: all 0.3s ease;
+    height: 100vh;
+    position: fixed;
+}
+
+#sidebar.collapsed {
+    width: 80px;
+    min-width: 80px;
+}
+
+#sidebar.collapsed .sidebar-header h3,
+#sidebar.collapsed .nav-link span {
+    display: none;
+}
+
+#sidebar.collapsed .submenu-arrow {
+    display: none;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar-header .logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 15px 25px;
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebar ul li a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#sidebar ul li.active > a {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Collapsed state icon adjustments */
+#sidebar.collapsed .nav-link {
+    padding: 15px;
+    text-align: center;
+}
+
+#sidebar.collapsed .nav-link i {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+/* Content Area */
+#content {
+    width: calc(100% - 280px);
+    margin-left: 280px;
+    transition: all 0.3s ease;
+}
+
+#content.expanded {
+    margin-left: 80px;
+}
+/* Top Navigation */
+.navbar {
+    padding: 15px 20px;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+/* KPI Cards */
+.kpi-card {
+    border: none;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Charts */
+.card {
+    border: none;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+/* Tables */
+.table-responsive {
+    border-radius: 0.35rem;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    border-bottom: 2px solid #e3e6f0;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+}
+
+.btn-primary:hover {
+    background-color: #5a5c69;
+    border-color: #5a5c69;
+}
+
+/* Badges */
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 600;
+    border-radius: 0.35rem;
+}
+
+/* Dropdowns */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    border-radius: 0.35rem;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+        margin-left: 0;
+    }
+    #content.active {
+        margin-left: 250px;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-color);
+}
+
+
+/* Arrow Styling */
+.submenu-arrow {
+    float: right;
+    transition: transform 0.3s ease;
+}
+
+.submenu-arrow.rotated {
+    transform: rotate(-180deg);
+}
+
+.nav-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

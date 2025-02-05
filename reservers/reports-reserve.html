@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Reports Dashboard</h1>
+        <button onclick="location.href='index.html'" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="hamburger-menu" id="menuToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="container" style="margin-top: 80px;">
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="employee-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="calendar.html" class="active"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                    <li><a href="timesheets.html"><i class="fas fa-clock"></i> Time Sheets</a></li>
+                    <li><a href="projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="reports.html" class="active"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="dashboard">
+            <div class="reports-container">
+                <div class="reports-header">
+                    <div class="date-range-picker">
+                        <input type="date" id="startDate">
+                        <span>to</span>
+                        <input type="date" id="endDate">
+                        <button id="applyDateRange" class="btn-primary">
+                            <i class="fas fa-check"></i> Apply
+                        </button>
+                    </div>
+                    <div class="export-options">
+                        <button class="btn-export" id="exportPDF">
+                            <i class="fas fa-file-pdf"></i> Export PDF
+                        </button>
+                        <button class="btn-export" id="exportExcel">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="reports-grid">
+                    <!-- Time Distribution Chart -->
+                    <div class="report-card">
+                        <h3><i class="fas fa-chart-pie"></i> Time Distribution by Project</h3>
+                        <canvas id="timeDistributionChart"></canvas>
+                    </div>
+
+                    <!-- Weekly Hours Trend -->
+                    <div class="report-card">
+                        <h3><i class="fas fa-chart-line"></i> Weekly Hours Trend</h3>
+                        <canvas id="weeklyTrendChart"></canvas>
+                    </div>
+
+                    <!-- Project Progress -->
+                    <div class="report-card">
+                        <h3><i class="fas fa-tasks"></i> Project Progress</h3>
+                        <div class="progress-list" id="projectProgress">
+                            <!-- Project progress items will be added here -->
+                        </div>
+                    </div>
+
+                    <!-- Summary Statistics -->
+                    <div class="report-card">
+                        <h3><i class="fas fa-calculator"></i> Summary Statistics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Hours</span>
+                                <span class="stat-value" id="totalHours">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Active Projects</span>
+                                <span class="stat-value" id="activeProjects">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Avg Hours/Week</span>
+                                <span class="stat-value" id="avgHoursWeek">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Completion Rate</span>
+                                <span class="stat-value" id="completionRate">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/reports.js"></script>
+</body>
+</html>

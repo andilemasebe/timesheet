@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/messages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Messages Dashboard</h1>
+        <button onclick="location.href='index.html'" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="hamburger-menu" id="menuToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="container" style="margin-top: 80px;">
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="employee-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                    <li><a href="messages.html" class="active"><i class="fas fa-comments"></i> Messages</a></li>
+                    <li><a href="projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="dashboard">
+            <div class="messages-container">
+                <div class="messages-sidebar">
+                    <div class="messages-search">
+                        <input type="text" placeholder="Search messages...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    
+                    <div class="messages-tabs">
+                        <button class="tab-btn active" data-tab="direct">Direct Messages</button>
+                        <button class="tab-btn" data-tab="channels">Channels</button>
+                    </div>
+
+                    <div class="messages-list" id="messagesList">
+                        <!-- Direct Messages -->
+                        <div class="message-item unread">
+                            <img src="../assets/avatar1.jpg" alt="User Avatar" class="avatar">
+                            <div class="message-info">
+                                <h4>John Smith</h4>
+                                <p>Latest project updates...</p>
+                                <span class="message-time">2m ago</span>
+                            </div>
+                        </div>
+                        <!-- More message items -->
+                    </div>
+
+                    <div class="channels-list" id="channelsList" style="display: none;">
+                        <!-- Channels -->
+                        <div class="channel-item">
+                            <span class="channel-icon">#</span>
+                            <div class="channel-info">
+                                <h4>general</h4>
+                                <p>Company-wide announcements</p>
+                            </div>
+                        </div>
+                        <!-- More channel items -->
+                    </div>
+                </div>
+
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="chat-user-info">
+                            <img src="../assets/avatar1.jpg" alt="User Avatar" class="avatar">
+                            <div>
+                                <h3>John Smith</h3>
+                                <span class="status online">Online</span>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="btn-icon"><i class="fas fa-phone"></i></button>
+                            <button class="btn-icon"><i class="fas fa-video"></i></button>
+                            <button class="btn-icon"><i class="fas fa-info-circle"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Chat messages will be dynamically added here -->
+                    </div>
+
+                    <div class="chat-input">
+                        <button class="btn-icon"><i class="fas fa-paperclip"></i></button>
+                        <input type="text" placeholder="Type a message...">
+                        <button class="btn-icon"><i class="far fa-smile"></i></button>
+                        <button class="btn-send"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="info-header">
+                        <h3>Details</h3>
+                        <button class="btn-close"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="info-content">
+                        <div class="shared-files">
+                            <h4>Shared Files</h4>
+                            <!-- Shared files list -->
+                        </div>
+                        <div class="shared-media">
+                            <h4>Media</h4>
+                            <!-- Shared media grid -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Message Modal -->
+    <div id="newMessageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>New Message</h2>
+            <div class="form-group">
+                <input type="text" placeholder="Search users...">
+                <div class="user-suggestions">
+                    <!-- User suggestions will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/messages.js"></script>
+</body>
+</html>

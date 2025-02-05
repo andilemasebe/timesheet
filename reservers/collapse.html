@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet System Features</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .collapsible {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            padding: 10px 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .collapsible:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            padding: 0 20px;
+            display: none;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .content ul {
+            list-style: none;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .content li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .content li:last-child {
+            border-bottom: none;
+        }
+
+        .content li span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Timesheet System Features</h1>
+
+    <!-- Analytics -->
+    <button class="collapsible">Analytics</button>
+    <div class="content">
+        <ul>
+            <li><span>Overview:</span> View key timesheet and performance insights.</li>
+            <li><span>Generate Reports:</span> Create detailed reports for analysis.</li>
+            <li><span>Productivity Trends:</span> Track trends over time.</li>
+        </ul>
+    </div>
+
+    <!-- Directory -->
+    <button class="collapsible">Directory</button>
+    <div class="content">
+        <ul>
+            <li><span>Employee Profiles:</span> Search and view employee details.</li>
+            <li><span>Team Directory:</span> Explore team structures and roles.</li>
+            <li><span>Contacts:</span> Access organizational contacts.</li>
+        </ul>
+    </div>
+
+    <!-- Expenses -->
+    <button class="collapsible">Expenses</button>
+    <div class="content">
+        <ul>
+            <li><span>New Claim:</span> Submit a new expense.</li>
+            <li><span>Expense History:</span> Review past claims and statuses.</li>
+            <li><span>Budget Overview:</span> Track allocated and spent budgets.</li>
+        </ul>
+    </div>
+
+    <!-- Helpdesk -->
+    <button class="collapsible">Helpdesk</button>
+    <div class="content">
+        <ul>
+            <li><span>Submit Request:</span> Raise a ticket for assistance.</li>
+            <li><span>Track Tickets:</span> Check the status of your open tickets.</li>
+            <li><span>Help Articles:</span> Access self-help and troubleshooting guides.</li>
+        </ul>
+    </div>
+
+    <!-- Knowledge Base -->
+    <button class="collapsible">Knowledge Base</button>
+    <div class="content">
+        <ul>
+            <li><span>Policies & Guidelines:</span> View company rules and procedures.</li>
+            <li><span>Tutorials:</span> Learn through step-by-step guides.</li>
+            <li><span>FAQs:</span> Find answers to frequently asked questions.</li>
+        </ul>
+    </div>
+
+    <!-- Messages -->
+    <button class="collapsible">Messages</button>
+    <div class="content">
+        <ul>
+            <li><span>Inbox:</span> Manage messages and alerts.</li>
+            <li><span>Chat:</span> Communicate with team members directly.</li>
+            <li><span>Notifications:</span> Stay updated on key system changes.</li>
+        </ul>
+    </div>
+
+    <!-- Performance -->
+    <button class="collapsible">Performance</button>
+    <div class="content">
+        <ul>
+            <li><span>My Performance:</span> Track your personal productivity.</li>
+            <li><span>Team Overview:</span> Monitor team performance and achievements.</li>
+            <li><span>Project Progress:</span> View milestones and deadlines.</li>
+        </ul>
+    </div>
+
+    <!-- Resources -->
+    <button class="collapsible">Resources</button>
+    <div class="content">
+        <ul>
+            <li><span>Templates:</span> Access ready-to-use forms and templates.</li>
+            <li><span>Documentation:</span> View manuals and detailed guides.</li>
+            <li><span>Tools & Assets:</span> Download relevant resources for work.</li>
+        </ul>
+    </div>
+
+    <!-- Training -->
+    <button class="collapsible">Training</button>
+    <div class="content">
+        <ul>
+            <li><span>Courses:</span> Browse available training programs.</li>
+            <li><span>My Progress:</span> Track your learning and certifications.</li>
+            <li><span>Training Calendar:</span> Schedule upcoming training sessions.</li>
+        </ul>
+    </div>
+
+    <script>
+        const collapsibles = document.querySelectorAll(".collapsible");
+
+        collapsibles.forEach(button => {
+            button.addEventListener("click", () => {
+                button.classList.toggle("active");
+                const content = button.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            margin-top: 80px;
+            padding: 0 15px;
+        }
+
+        .dashboard {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .timesheet-form {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .timesheet-table {
+            width: 100%;
+            min-width: 600px;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .container {
+                padding: 0 10px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .hamburger-menu {
+                display: block !important;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                position: absolute;
+                right: 70px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .sidebar {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 999;
+            }
+
+            .sidebar.active {
+                display: block;
+            }
+
+            .dashboard {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .button-group {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-submit, .btn-reset {
+                width: 100%;
+            }
+
+            .timesheet-table {
+                font-size: 14px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Employee Dashboard</h1>
+        <button onclick="location.href='index.html'" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="hamburger-menu" id="menuToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="employee-dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="timesheets.html"><i class="fas fa-clock"></i> Time Sheets</a></li>
+                    <li><a href="projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="dashboard">
+            <div class="timesheet-form">
+                <h2 style="text-align: center;"><i class="fas fa-calendar-plus"></i> Submit Timesheet</h2><br>
+                <form id="timesheetForm" action="/submit-timesheet" method="POST" autocomplete="on">
+                    <div class="form-group">
+                        <label for="date"><i class="far fa-calendar-alt"></i> Date:</label>
+                        <input type="date" id="date" name="date" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="hours"><i class="far fa-clock"></i> Hours Worked:</label>
+                        <input type="number" id="hours" name="hours" min="0" max="24" step="0.5" placeholder="Enter hours (0-24)" required class="form-control" 
+                               title="Please enter the number of hours worked (between 0 and 24)">
+                    </div>
+                    <div class="form-group">
+                        <label for="project"><i class="fas fa-tasks"></i> Project:</label>
+                        <select id="project" name="project" required class="form-control">
+                            <option value="">Select a project</option>
+                            <option value="project1">Project 1</option>
+                            <option value="project2">Project 2</option>
+                            <option value="project3">Project 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description"><i class="fas fa-comment-alt"></i> Work Description:</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Describe your work" required class="form-control"
+                                  maxlength="500"></textarea>
+                        <small class="char-count">0/500 characters</small>
+                    </div>
+                    <div class="form-group button-group">
+                        <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Submit Time Entry</button>
+                        <button type="reset" class="btn-reset"><i class="fas fa-undo"></i> Clear Form</button>
+                    </div>
+                </form>
+                
+                <h3><i class="fas fa-history"></i> Recent Time Entries</h3>
+                <div class="table-responsive">
+                    <table class="timesheet-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Hours</th>
+                                <th>Project</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timeEntries">
+                            <!-- Time entries will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/employee.js"></script>"
+    <script src="../js/shared-views.js"></script>
+"
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

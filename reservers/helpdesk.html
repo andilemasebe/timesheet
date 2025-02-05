@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/helpdesk.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Helpdesk Portal</h1>
+        <button onclick="location.href='index.html'" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="hamburger-menu" id="menuToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="container" style="margin-top: 80px;">
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="employee-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="helpdesk.html" class="active"><i class="fas fa-headset"></i> Helpdesk</a></li>
+                    <li><a href="knowledge.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> My Tickets</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="dashboard">
+            <div class="helpdesk-container">
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-btn primary" onclick="showNewTicketModal()">
+                        <i class="fas fa-plus-circle"></i>
+                        New Ticket
+                    </button>
+                    <button class="action-btn secondary" onclick="location.href='knowledge.html'">
+                        <i class="fas fa-book"></i>
+                        Browse KB
+                    </button>
+                    <button class="action-btn secondary" onclick="showChatSupport()">
+                        <i class="fas fa-comments"></i>
+                        Live Chat
+                    </button>
+                </div>
+
+                <!-- Ticket Status Summary -->
+                <div class="ticket-summary">
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="status-info">
+                            <h3>Open Tickets</h3>
+                            <span class="count">5</span>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <div class="status-info">
+                            <h3>In Progress</h3>
+                            <span class="count">3</span>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="status-info">
+                            <h3>Resolved</h3>
+                            <span class="count">12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Tickets -->
+                <div class="recent-tickets">
+                    <div class="section-header">
+                        <h2><i class="fas fa-ticket-alt"></i> Recent Tickets</h2>
+                        <div class="ticket-filters">
+                            <select id="priorityFilter">
+                                <option value="all">All Priorities</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                            <select id="categoryFilter">
+                                <option value="all">All Categories</option>
+                                <option value="technical">Technical</option>
+                                <option value="hr">HR</option>
+                                <option value="facilities">Facilities</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="tickets-table">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Subject</th>
+                                    <th>Category</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketsTableBody">
+                                <!-- Tickets will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Knowledge Base Quick Access -->
+                <div class="kb-quick-access">
+                    <h2><i class="fas fa-lightbulb"></i> Popular Solutions</h2>
+                    <div class="kb-articles">
+                        <!-- KB articles will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Ticket Modal -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Submit New Support Ticket</h2>
+            <form id="ticketForm">
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" id="ticketSubject" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="ticketCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="hr">HR Support</option>
+                            <option value="facilities">Facilities</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="ticketPriority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="ticketDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Attachments</label>
+                    <input type="file" id="ticketAttachments" multiple>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Submit Ticket</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/helpdesk.js"></script>
+</body>
+</html>
+
+
+
+
+
+<!-- - Ticket system
+- FAQ section
+- Support chat
+- Knowledge articles
+- Issue tracking -->

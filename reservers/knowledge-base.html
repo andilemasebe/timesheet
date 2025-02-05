@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/knowledge-base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Knowledge Base</h1>
+        <button onclick="location.href='index.html'" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="hamburger-menu" id="menuToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="container" style="margin-top: 80px;">
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="employee-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                    <li><a href="messages.html"><i class="fas fa-comments"></i> Messages</a></li>
+                    <li><a href="knowledge-base.html" class="active"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="dashboard">
+            <div class="kb-container">
+                <div class="kb-header">
+                    <div class="kb-search">
+                        <input type="text" placeholder="Search knowledge base...">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <button class="btn-primary" id="createArticleBtn">
+                        <i class="fas fa-plus"></i> Create Article
+                    </button>
+                </div>
+
+                <div class="kb-content">
+                    <div class="kb-categories">
+                        <h2>Categories</h2>
+                        <div class="category-list">
+                            <div class="category-item active">
+                                <i class="fas fa-laptop-code"></i>
+                                <div class="category-info">
+                                    <h3>Technical Guides</h3>
+                                    <span>42 articles</span>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <i class="fas fa-book-open"></i>
+                                <div class="category-info">
+                                    <h3>Company Policies</h3>
+                                    <span>28 articles</span>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <i class="fas fa-tools"></i>
+                                <div class="category-info">
+                                    <h3>Best Practices</h3>
+                                    <span>35 articles</span>
+                                </div>
+                            </div>
+                            <div class="category-item">
+                                <i class="fas fa-question-circle"></i>
+                                <div class="category-info">
+                                    <h3>FAQs</h3>
+                                    <span>56 articles</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kb-articles">
+                        <div class="articles-header">
+                            <h2>Technical Guides</h2>
+                            <div class="articles-filter">
+                                <select>
+                                    <option value="recent">Most Recent</option>
+                                    <option value="popular">Most Popular</option>
+                                    <option value="updated">Recently Updated</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="articles-grid">
+                            <!-- Articles will be dynamically populated -->
+                        </div>
+
+                        <div class="articles-pagination">
+                            <button class="btn-page"><i class="fas fa-chevron-left"></i></button>
+                            <span>Page 1 of 5</span>
+                            <button class="btn-page"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="kb-sidebar">
+                        <div class="popular-articles">
+                            <h3>Popular Articles</h3>
+                            <ul>
+                                <!-- Popular articles will be listed here -->
+                            </ul>
+                        </div>
+                        <div class="recent-updates">
+                            <h3>Recent Updates</h3>
+                            <ul>
+                                <!-- Recent updates will be listed here -->
+                            </ul>
+                        </div>
+                        <div class="quick-links">
+                            <h3>Quick Links</h3>
+                            <ul>
+                                <!-- Quick links will be listed here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Article Modal -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Create New Article</h2>
+            <form id="articleForm">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select required>
+                        <option value="">Select Category</option>
+                        <option value="technical">Technical Guides</option>
+                        <option value="policies">Company Policies</option>
+                        <option value="practices">Best Practices</option>
+                        <option value="faq">FAQs</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <div id="editor"></div>
+                </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <input type="text" placeholder="Add tags separated by commas">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Publish Article</button>
+                    <button type="button" class="btn-draft">Save as Draft</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/knowledge-base.js"></script>
+</body>
+</html>

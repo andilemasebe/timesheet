@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/performance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Performance Dashboard</h1>
+        <button onclick="location.href='index.html'" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="hamburger-menu" id="menuToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="container" style="margin-top: 80px;">
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="employee-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="performance.html" class="active"><i class="fas fa-chart-line"></i> Performance</a></li>
+                    <li><a href="projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="dashboard">
+            <div class="performance-container">
+                <!-- Performance Overview Section -->
+                <div class="performance-overview">
+                    <h2><i class="fas fa-tachometer-alt"></i> Performance Overview</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">92%</div>
+                            <div class="metric-label">Overall Rating</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 5%
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">87%</div>
+                            <div class="metric-label">Goals Achieved</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 3%
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">95%</div>
+                            <div class="metric-label">Attendance</div>
+                            <div class="metric-trend neutral">
+                                <i class="fas fa-equals"></i> 0%
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">4.8</div>
+                            <div class="metric-label">Peer Rating</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 0.2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Goals Tracking Section -->
+                <div class="goals-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-bullseye"></i> Goals Tracking</h2>
+                        <button class="btn-primary" id="addGoalBtn">
+                            <i class="fas fa-plus"></i> Add Goal
+                        </button>
+                    </div>
+                    <div class="goals-grid" id="goalsGrid">
+                        <!-- Goals will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- Skills Assessment Section -->
+                <div class="skills-section">
+                    <h2><i class="fas fa-brain"></i> Skills Assessment</h2>
+                    <div class="skills-chart-container">
+                        <canvas id="skillsRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Performance History Section -->
+                <div class="performance-history">
+                    <h2><i class="fas fa-history"></i> Performance History</h2>
+                    <div class="chart-container">
+                        <canvas id="performanceHistoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Feedback and Reviews Section -->
+                <div class="feedback-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-comments"></i> Recent Feedback</h2>
+                        <button class="btn-secondary" id="requestFeedbackBtn">
+                            <i class="fas fa-plus"></i> Request Feedback
+                        </button>
+                    </div>
+                    <div class="feedback-list" id="feedbackList">
+                        <!-- Feedback items will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Goal Modal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Goal</h2>
+            <form id="goalForm">
+                <div class="form-group">
+                    <label>Goal Title</label>
+                    <input type="text" id="goalTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="goalDescription" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="goalDueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="goalPriority" required>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Create Goal</button>
+                    <button type="button" class="btn-cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/performance.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+<!-- - Goal setting
+- Review cycles
+- Feedback system
+- Development plans
+- Achievement tracking -->

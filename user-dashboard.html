@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Timesheet System</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/user-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+        }
+        .dashboard {
+            flex: 1;
+            padding: 20px;
+            background: #f5f6fa;
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .overview-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background: #fff;
+            width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Get user data from database
+$user_id = $_SESSION['user_id'];
+$db = new PDO("mysql:host=localhost;dbname=dashboard_db", "username", "password");
+$stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->execute([$user_id]);
+$user = $stmt->fetch();
+
+// Get tasks
+$stmt = $db->prepare("SELECT * FROM tasks WHERE user_id = ? ORDER BY due_date ASC");
+$stmt->execute([$user_id]);
+$tasks = $stmt->fetchAll();
+
+// Get meetings
+$stmt = $db->prepare("SELECT * FROM meetings WHERE user_id = ? AND meeting_date >= CURDATE() ORDER BY meeting_date ASC");
+$stmt->execute([$user_id]);
+$meetings = $stmt->fetchAll();
+?>
+<body>
+    <div class="header" style="position: fixed; width: 100%; top: 0; z-index: 1000;">
+        <h1>Welcome, <?php echo htmlspecialchars($user['name']); ?></h1>
+        <div class="user-controls">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge"><?php echo count($notifications); ?></span>
+            </div>
+            <button onclick="location.href='logout.php'" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-top: 80px;">
+        <div class="sidebar">
+            <div class="user-profile">
+                <img src="<?php echo htmlspecialchars($user['profile_pic']); ?>" alt="Profile Picture" class="profile-pic">
+                <h3><?php echo htmlspecialchars($user['name']); ?></h3>
+                <p><?php echo htmlspecialchars($user['job_title']); ?></p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active"><i class="fas fa-home"></i> Overview</a></li>
+                    <li><a href="tasks.php"><i class="fas fa-tasks"></i> My Tasks</a></li>
+                    <li><a href="calendar.php"><i class="fas fa-calendar"></i> Calendar</a></li>
+                    <li><a href="timetracking.php"><i class="fas fa-clock"></i> Time Tracking</a></li>
+                    <li><a href="documents.php"><i class="fas fa-file-alt"></i> Documents</a></li>
+                    <li><a href="settings.php"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="dashboard">
+            <div class="user-container">
+                <!-- Today's Overview -->
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h3>Tasks Completed</h3>
+                            <div class="overview-value"><?php echo $completed_tasks; ?>/<?php echo $total_tasks; ?></div>
+                            <div class="overview-progress"><?php echo round(($completed_tasks/$total_tasks) * 100); ?>% Complete</div>
+                        </div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h3>Hours Logged</h3>
+                            <div class="overview-value"><?php echo $hours_logged; ?></div>
+                            <div class="overview-progress">Today's Hours</div>
+                        </div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h3>Meetings Today</h3>
+                            <div class="overview-value"><?php echo $total_meetings; ?></div>
+                            <div class="overview-progress"><?php echo $remaining_meetings; ?> Remaining</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Task Management -->
+                <div class="tasks-section">
+                    <div class="section-header">
+                        <h2>My Tasks</h2>
+                        <button class="add-task-btn" onclick="showAddTaskModal()">
+                            <i class="fas fa-plus"></i> Add Task
+                        </button>
+                    </div>
+                    <div class="task-list" id="taskList">
+                        <?php foreach($tasks as $task): ?>
+                        <div class="task-item">
+                            <h4><?php echo htmlspecialchars($task['title']); ?></h4>
+                            <p>Due: <?php echo date('M d, Y', strtotime($task['due_date'])); ?></p>
+                            <span class="priority-badge <?php echo $task['priority']; ?>"><?php echo ucfirst($task['priority']); ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Calendar & Schedule -->
+                <div class="schedule-section">
+                    <div class="calendar-widget">
+                        <h3>Today's Schedule</h3>
+                        <div class="schedule-list" id="scheduleList">
+                            <?php foreach($schedule as $item): ?>
+                            <div class="schedule-item">
+                                <span class="time"><?php echo date('H:i', strtotime($item['start_time'])); ?></span>
+                                <span class="event"><?php echo htmlspecialchars($item['title']); ?></span>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="upcoming-meetings">
+                        <h3>Upcoming Meetings</h3>
+                        <div class="meeting-list" id="meetingList">
+                            <?php foreach($meetings as $meeting): ?>
+                            <div class="meeting-item">
+                                <h4><?php echo htmlspecialchars($meeting['title']); ?></h4>
+                                <p><?php echo date('M d, Y H:i', strtotime($meeting['meeting_date'])); ?></p>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="metrics-section">
+                    <div class="metric-card">
+                        <h3>Productivity Trend</h3>
+                        <canvas id="productivityChart"></canvas>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Task Distribution</h3>
+                        <canvas id="taskDistributionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <?php foreach($activities as $activity): ?>
+                        <div class="activity-item">
+                            <span class="activity-time"><?php echo time_ago($activity['created_at']); ?></span>
+                            <span class="activity-text"><?php echo htmlspecialchars($activity['description']); ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div id="addTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Add New Task</h2>
+            <form id="taskForm" method="POST" action="add_task.php">
+                <div class="form-group">
+                    <label>Task Title</label>
+                    <input type="text" id="taskTitle" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Due Date</label>
+                    <input type="date" id="taskDueDate" name="due_date" required>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="taskPriority" name="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="taskDescription" name="description"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Add Task</button>
+                    <button type="button" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/user-dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userRole = localStorage.getItem('userRole');
+            updateSidebarByRole(userRole);
+        });
+    </script>
+</body>
+</html>
+
+
